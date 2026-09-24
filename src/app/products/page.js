@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import { Suspense } from "react";
 import {
   getProducts,
   searchProducts,
@@ -14,7 +14,7 @@ import {
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-const Page = () => {
+const ProductsPage  = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -1255,6 +1255,20 @@ const Page = () => {
 
       </div>
     </ProtectedRoute>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+          <p className="text-slate-600">Loading products...</p>
+        </div>
+      }
+    >
+      <ProductsPage />
+    </Suspense>
   );
 };
 
